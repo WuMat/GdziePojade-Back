@@ -1,8 +1,13 @@
 import dotenv from "dotenv";
 import express from "express";
+import morgan from "morgan";
 import mongoose from "mongoose";
+import cors from "cors";
+import bodyParser from "body-parser";
 
 dotenv.config();
+
+import placeRouter from "./api/routes/places";
 
 const DBNAME = process.env.DB_NAME;
 const DBPASSWORD = process.env.DB_PASSWORD;
@@ -17,6 +22,18 @@ mongoose
 
 const app = express();
 
-console.log("dziala");
+// app.use(morgan("dev"));
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use("/place", placeRouter);
+
+app.use((error, req, res, next) => {
+  const status = error.statusCode || 500;
+  const message = error.message || "unexpected error";
+  const data = error.data;
+  res.status(status).json({ message: message, data: data });
+});
 
 export default app;
