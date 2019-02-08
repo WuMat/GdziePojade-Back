@@ -27,7 +27,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/place", placeRouter);
+app.use("/api", placeRouter);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

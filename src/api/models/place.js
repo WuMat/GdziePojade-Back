@@ -6,7 +6,7 @@ const placeSchema = new Schema(
     province: { type: String, required: true },
     description: { type: String, required: true },
     kindOfPlace: { type: String, required: true },
-    rating: { type: Number, required: true },
+    rating: { type: Number, required: false },
     creator: { type: String, default: "mati" }
   },
   { timestamps: true }
