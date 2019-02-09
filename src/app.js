@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 dotenv.config();
 
 import placeRouter from "./api/routes/places";
+import userRouter from "./api/routes/user";
 
 const DBNAME = process.env.DB_NAME;
 const DBPASSWORD = process.env.DB_PASSWORD;
@@ -22,12 +23,13 @@ mongoose
 
 const app = express();
 
-// app.use(morgan("dev"));
+app.use(morgan("dev"));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api", placeRouter);
+app.use("/api", userRouter);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

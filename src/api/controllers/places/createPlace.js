@@ -2,6 +2,7 @@ import Place from "../../models/place";
 import { validationResult } from "express-validator/check";
 
 export const createPlace = async (req, res, next) => {
+  const data = { ...req.body };
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -9,9 +10,6 @@ export const createPlace = async (req, res, next) => {
       error.statusCode = 422;
       throw error;
     }
-    const data = { ...req.body };
-    console.log("---+++++---" + JSON.stringify(data));
-    console.log("---+++++---" + data.placeName);
 
     const place = new Place({
       placeName: data.placeName,
