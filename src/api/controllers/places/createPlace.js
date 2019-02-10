@@ -1,5 +1,7 @@
-import Place from "../../models/place";
 import { validationResult } from "express-validator/check";
+
+import Place from "../../models/place";
+import User from "../../models/user";
 
 export const createPlace = async (req, res, next) => {
   const data = { ...req.body };
@@ -17,11 +19,21 @@ export const createPlace = async (req, res, next) => {
       description: data.description,
       kindOfPlace: data.kindOfPlace,
       rating: data.rating,
-      creator: "mati"
+      author: req.userId
     });
 
     await place.save();
-    res.status(200).json({ message: "ok" });
+
+    // saving place ID in user document
+    const user = await User.findById(req.userId);
+    await user.places.push(place);
+    await user.save();
+
+    res.status(200).json({
+      message: "Place is created",
+      Place: place,
+      author: { id: user._id, name: user.name }
+    });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
@@ -29,5 +41,3 @@ export const createPlace = async (req, res, next) => {
     next(error);
   }
 };
-
-export const getAllPlaces = (req, res, next) => {};

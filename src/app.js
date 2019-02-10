@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/api", placeRouter);
-app.use("/api", userRouter);
+app.use("/api/user", userRouter);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;

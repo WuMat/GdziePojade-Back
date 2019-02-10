@@ -5,6 +5,7 @@ import User from "../models/user";
 
 import { createUser } from "../controllers/users/createUser";
 import { loginUser } from "../controllers/users/loginUser";
+import { removeUser } from "../controllers/users/removeUser";
 
 const router = express.Router();
 
@@ -49,5 +50,7 @@ router.post(
   ],
   loginUser
 );
+
+router.delete("/remove/:userId", removeUser);
 
 export default router;

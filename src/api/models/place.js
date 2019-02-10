@@ -7,7 +7,7 @@ const placeSchema = new Schema(
     description: { type: String, required: true },
     kindOfPlace: { type: String, required: true },
     rating: { type: Number, required: false },
-    creator: { type: String, default: "mati" }
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true }
   },
   { timestamps: true }
 );

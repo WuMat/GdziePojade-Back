@@ -7,10 +7,13 @@ import { removePlace } from "../controllers/places/removePlace";
 import { updatePlace } from "../controllers/places/updatePlace";
 import { getOnePlace } from "../controllers/places/getOnePlace";
 
+import { isAuth } from "../middleware/is-auth";
+
 const router = express.Router();
 
 router.post(
   "/place",
+  isAuth,
   [
     body("placeName").isLength({ min: 5 }),
     body("province").isLength({ min: 5 }),
