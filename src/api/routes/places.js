@@ -11,32 +11,20 @@ import { isAuth } from "../middleware/is-auth";
 
 const router = express.Router();
 
-router.post(
-  "/place",
-  isAuth,
-  [
-    body("placeName").isLength({ min: 5 }),
-    body("province").isLength({ min: 5 }),
-    body("description").isLength({ min: 5 }),
-    body("kindOfPlace").isLength({ min: 5 })
-  ],
-  createPlace
-);
+const validation = [
+  body("placeName").isLength({ min: 5 }),
+  body("province").isLength({ min: 5 }),
+  body("description").isLength({ min: 5 }),
+  body("kindOfPlace").isLength({ min: 5 })
+];
+
+router.post("/place", isAuth, [...validation], createPlace);
 router.get("/place/:placeId", getOnePlace);
 
 router.get("/place", getAllPlaces);
 
-router.delete("/place/:placeId", removePlace);
+router.delete("/place/:placeId", isAuth, removePlace);
 
-router.put(
-  "/place/:placeId",
-  [
-    body("placeName").isLength({ min: 5 }),
-    body("province").isLength({ min: 5 }),
-    body("description").isLength({ min: 5 }),
-    body("kindOfPlace").isLength({ min: 5 })
-  ],
-  updatePlace
-);
+router.put("/place/:placeId", isAuth, [...validation], updatePlace);
 
 export default router;
