@@ -6,7 +6,6 @@ export const updatePlace = async (req, res, next) => {
   const placeId = req.params.placeId;
   const errors = validationResult(req);
   const user = req.userId;
-  console.log("USER   ; " + user);
   try {
     if (!errors.isEmpty()) {
       const error = new Error("Validation failed");
@@ -26,14 +25,7 @@ export const updatePlace = async (req, res, next) => {
       throw error;
     }
 
-    place.placeName = data.placeName;
-    place.province = data.province;
-    place.description = data.description;
-    place.kindOfPlace = data.kindOfPlace;
-    place.rating = data.rating;
-    place.author = req.userId;
-
-    await place.save();
+    await Place.updateOne({ _id: placeId }, { $set: data });
     res.status(200).json({ message: "place updated" });
   } catch (error) {
     if (!error.statusCode) {

@@ -25,6 +25,6 @@ router.get("/place", getAllPlaces);
 
 router.delete("/place/:placeId", isAuth, removePlace);
 
-router.put("/place/:placeId", isAuth, [...validation], updatePlace);
+router.put("/place/:placeId", isAuth, updatePlace);
 
 export default router;
